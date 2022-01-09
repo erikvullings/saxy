@@ -4,9 +4,8 @@ Fast and lightweight event-driven streaming XML parser in pure TypeScript.
 
 [![npm version](https://img.shields.io/npm/v/saxy.svg?style=flat-square)](https://www.npmjs.com/package/saxy)
 [![npm downloads](https://img.shields.io/npm/dm/saxy.svg?style=flat-square)](https://www.npmjs.com/package/saxy)
-[![build status](https://img.shields.io/travis/matteodelabre/saxy.svg?style=flat-square)](https://travis-ci.org/matteodelabre/saxy)
-[![coverage](https://img.shields.io/coveralls/matteodelabre/saxy.svg?style=flat-square)](https://coveralls.io/github/matteodelabre/saxy)
-[![dependencies status](http://img.shields.io/david/matteodelabre/saxy.svg?style=flat-square)](https://david-dm.org/matteodelabre/saxy)
+[![build status](https://img.shields.io/travis/erikvullings/saxy.svg?style=flat-square)](https://travis-ci.org/erikvullings/saxy)
+[![coverage](https://img.shields.io/coveralls/erikvullings/saxy.svg?style=flat-square)](https://coveralls.io/github/erikvullings/saxy)
 
 Saxy is forked from [Saxophone](https://github.com/matteodelabre/saxophone) version 0.7.2 and converted to TypeScript, so most credits go to Mattéo Delabre. Besides converting it to TypeScript, so you have proper typings when using it, it also includes several unmerged pull requests, i.e. testing on Node 16, and the parser is a `Transform` stream instead of a `Writeable` stream.
 
