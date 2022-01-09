@@ -1,0 +1,16 @@
+.github
+.vscode
+benchmark
+src
+.*
+.vscode
+.editorconfig
+.gitignore
+src
+node_modules
+tsconfig.json
+eslint.json
+pnpm-lock.yaml
+dist/**/*.test.js
+dist/**/*.test.js.map
+dist/**/*.test.d.ts

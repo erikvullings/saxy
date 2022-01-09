@@ -1,48 +1,52 @@
-# Saxophone 🎷
+# Saxy
 
-Fast and lightweight event-driven streaming XML parser in pure JavaScript.
+Fast and lightweight event-driven streaming XML parser in pure TypeScript.
 
-[![npm version](https://img.shields.io/npm/v/saxophone.svg?style=flat-square)](https://www.npmjs.com/package/saxophone)
-[![npm downloads](https://img.shields.io/npm/dm/saxophone.svg?style=flat-square)](https://www.npmjs.com/package/saxophone)
-[![build status](https://img.shields.io/github/workflow/status/matteodelabre/saxophone/test?style=flat-square)](https://github.com/matteodelabre/saxophone/actions)
-[![coverage](https://img.shields.io/coveralls/matteodelabre/saxophone.svg?style=flat-square)](https://coveralls.io/github/matteodelabre/saxophone)
-[![dependencies status](http://img.shields.io/david/matteodelabre/saxophone.svg?style=flat-square)](https://david-dm.org/matteodelabre/saxophone)
+[![npm version](https://img.shields.io/npm/v/saxy.svg?style=flat-square)](https://www.npmjs.com/package/saxy)
+[![npm downloads](https://img.shields.io/npm/dm/saxy.svg?style=flat-square)](https://www.npmjs.com/package/saxy)
+[![build status](https://img.shields.io/travis/matteodelabre/saxy.svg?style=flat-square)](https://travis-ci.org/matteodelabre/saxy)
+[![coverage](https://img.shields.io/coveralls/matteodelabre/saxy.svg?style=flat-square)](https://coveralls.io/github/matteodelabre/saxy)
+[![dependencies status](http://img.shields.io/david/matteodelabre/saxy.svg?style=flat-square)](https://david-dm.org/matteodelabre/saxy)
 
-Saxophone is inspired by SAX parsers such as [sax-js](https://github.com/isaacs/sax-js) and [EasySax](https://github.com/vflash/easysax): unlike most XML parsers, it does not create a Document Object Model ([DOM](https://en.wikipedia.org/wiki/Document_Object_Model)) tree as a result of parsing documents.
-Instead, it emits events for each tag or text node encountered as the parsing goes on, which makes it an online algorithm.
-This means that Saxophone has a low memory footprint, can easily parse large documents, and can parse documents as they come from a stream.
+Saxy is forked from [Saxophone](https://github.com/matteodelabre/saxophone) version 0.7.2 and converted to TypeScript, so most credits go to Mattéo Delabre. Besides converting it to TypeScript, so you have proper typings when using it, it also includes several unmerged pull requests, i.e. testing on Node 16, and the parser is a `Transform` stream instead of a `Writeable` stream.
 
-The parser does not keep track of the document state while parsing and, in particular, does not check whether the document is well-formed or valid, making it super-fast (see the [benchmark](#Benchmark) below).
+It is inspired by SAX parsers such as [sax-js](https://github.com/isaacs/sax-js) and [EasySax](https://github.com/vflash/easysax): unlike most XML parsers, it does not create a Document Object Model ([DOM](https://en.wikipedia.org/wiki/Document_Object_Model)) tree as a result of parsing documents. Instead, it emits events for each tag or text node encountered as the parsing goes on. This means that Saxy has a really low memory footprint and can easily parse large documents.
+
+The parser does not keep track of the document state while parsing and, in particular, does not check whether the document is well-formed or valid, making it super-fast (see [benchmarks](#benchmarks) below).
 
 This library is best suited when you need to extract simple data out of an XML document that you know is well-formed. The parser will not report precise errors in case of syntax problems. An example would be reading data from an API endpoint.
 
 ## Installation
 
-This library works both on Node.JS and recent browsers.
-To install with `npm`:
+This library works both in Node.JS ≥6.0 and recent browsers.
+To install, use either one of below commands:
 
 ```sh
-$ npm install --save saxophone
+npm install --save saxy
+pnpm add saxy
+yarn add saxy
 ```
 
 ## Benchmark
 
-This benchmark compares the performance of four of the most popular SAX parsers against Saxophone’s performance while parsing a 21 KB document. Below are the results when run on a Intel® Core™ i7-7500U processor (2.70GHz, 2 physical cores with 2 logical cores each).
+This benchmark compares the performance of four of the most popular SAX parsers against Saxy’s performance while parsing a 21 KB document. Below are the results when run on a Intel® Core™ i7-7500U processor (2.70GHz, 2 physical cores with 2 logical cores each).
 
-Library            | Version | Operations per second (higher is better)
--------------------|--------:|----------------------------------------:
-**Saxophone**      |   0.5.0 |                         **6,797 ±2.99%**
-**EasySax**        |   0.3.2 |                         **7,919 ±1.21%**
-node-expat         |  2.3.18 |                               904 ±1.77%
-libxmljs.SaxParser |  0.19.7 |                               869 ±0.98%
-sax-js             |   1.2.4 |                               634 ±2.01%
+| Library            | Version | Operations per second (higher is better) |
+| ------------------ | ------: | ---------------------------------------: |
+| **Saxy**           |   0.5.0 |                         **6,840 ±1.48%** |
+| **EasySax**        |   0.3.2 |                         **7,354 ±1.16%** |
+| node-expat         |  2.3.17 |                             1,251 ±0.60% |
+| libxmljs.SaxParser |  0.19.5 |                             1,007 ±0.81% |
+| sax-js             |   1.2.4 |                               982 ±1.50% |
+
+To run the benchmark by yourself, use the following commands:
 
 ```sh
-$ git clone https://github.com/matteodelabre/saxophone.git
-$ cd saxophone
-$ npm install
-$ npm install --no-save easysax node-expat libxmljs sax
-$ npm run benchmark
+git clone https://github.com/matteodelabre/saxy.git
+cd saxy
+npm install
+npm install --no-save easysax node-expat libxmljs sax
+npm run benchmark
 ```
 
 ## Tests and coverage
@@ -50,11 +54,11 @@ $ npm run benchmark
 To run tests and check coverage, use the following commands:
 
 ```sh
-$ git clone https://github.com/matteodelabre/saxophone.git
-$ cd saxophone
-$ npm install
-$ npm test
-$ npm run coverage
+git clone https://github.com/matteodelabre/saxy.git
+cd saxy
+npm install
+npm test
+npm run coverage
 ```
 
 ## Examples
@@ -62,20 +66,20 @@ $ npm run coverage
 ### Simple example
 
 ```js
-const Saxophone = require('saxophone');
-const parser = new Saxophone();
+import { Saxy } from 'Saxy';
+const parser = new Saxy();
 
 // Called whenever an opening tag is found in the document,
 // such as <example id="1" /> - see below for a list of events
 parser.on('tagopen', tag => {
-    console.log(
-        `Open tag "${tag.name}" with attributes: ${JSON.stringify(Saxophone.parseAttrs(tag.attrs))}.`
-    );
+  console.log(
+    `Open tag "${tag.name}" with attributes: ${JSON.stringify(Saxy.parseAttrs(tag.attrs))}.`
+  );
 });
 
 // Called when we are done parsing the document
 parser.on('finish', () => {
-    console.log('Parsing finished.');
+  console.log('Parsing finished.');
 });
 
 // Triggers parsing - remember to set up listeners before
@@ -96,21 +100,21 @@ Parsing finished.
 
 Same example as above but with `Stream`s.
 
-```js
-const Saxophone = require('saxophone');
-const parser = new Saxophone();
+```ts
+import { Saxy } from 'saxy';
+const parser = new Saxy();
 
 // Called whenever an opening tag is found in the document,
 // such as <example id="1" /> - see below for a list of events
 parser.on('tagopen', tag => {
-    console.log(
-        `Open tag "${tag.name}" with attributes: ${JSON.stringify(Saxophone.parseAttrs(tag.attrs))}.`
-    );
+  console.log(
+    `Open tag "${tag.name}" with attributes: ${JSON.stringify(Saxy.parseAttrs(tag.attrs))}.`
+  );
 });
 
 // Called when we are done parsing the document
 parser.on('finish', () => {
-    console.log('Parsing finished.');
+  console.log('Parsing finished.');
 });
 
 // stdin is '<root><example id="1" /><example id="2" /></root>'
@@ -127,17 +131,48 @@ Open tag "example" with attributes: {"id":"2"}.
 Parsing finished.
 ```
 
+### Transform Stream (marcellino-ornelas)
+
+Saxy can now be used as a transform stream to send the parsed XML to another stream. Saxy works to keep low memory so it doesn't save any of the XML internally but uses events to fire certain data. So how do you tell the parser to send data to the next stream? The way to send data to another stream is to use the `parser.push()` method.
+
+Example:
+
+```xml
+<root>
+  <page>Hey this is some text</page>
+</root>
+```
+
+```ts
+import { createReadStream } from 'fs';
+import { Saxy } from 'saxy';
+
+const parser = new Saxy();
+
+parser.on('text', function(data) {
+  // Get the text from saxy
+  const text = data.contents;
+
+  // Send the data to the next stream;
+  parser.push(text);
+});
+
+createReadStream('file.xml')
+  .pipe(parser)
+  .pipe(process.stdout); // Hey this is some text
+```
+
 ## Documentation
 
-### `new Saxophone()`
+### `new Saxy()`
 
-Creates a new Saxophone parser instance. This object is a writable stream that will emit an event for each tag or node parsed from the incoming data. See [the list of events below.](#events)
+Creates a new Saxy parser instance. This object is a writable stream that will emit an event for each tag or node parsed from the incoming data. See [the list of events below.](#events)
 
-### `Saxophone#on()`, `Saxophone#removeListener()`, ...
+### `Saxy#on()`, `Saxy#removeListener()`
 
-Manage event listeners just like with any other event emitter. Saxophone inherits from all `EventEmitter` methods. See the relevant [Node documentation.](https://nodejs.org/api/events.html)
+Manage event listeners just like with any other event emitter. Saxy inherits from all `EventEmitter` methods. See the relevant [Node documentation.](https://nodejs.org/api/events.html)
 
-### `Saxophone#parse(xml)`
+### `Saxy#parse(xml)`
 
 Trigger the parsing of a whole document. This method will fire registered listeners, so you need to set them up before calling it. This is equivalent to writing `xml` to the stream and closing it.
 
@@ -145,11 +180,11 @@ Trigger the parsing of a whole document. This method will fire registered listen
 
 Arguments:
 
-* `xml` is an UTF-8 string or a `Buffer` containing the XML that you want to parse.
+- `xml` is an UTF-8 string or a `Buffer` containing the XML that you want to parse.
 
 This method returns the parser instance.
 
-### `Saxophone#write(xml)`
+### `Saxy#write(xml)`
 
 Parse a chunk of a XML document. This method will fire registered listeners so you need to set them up before calling it.
 
@@ -157,23 +192,23 @@ Parse a chunk of a XML document. This method will fire registered listeners so y
 
 Arguments:
 
-* `xml` is an UTF-8 string or a `Buffer` containing a chunk of the XML that you want to parse.
+- `xml` is an UTF-8 string or a `Buffer` containing a chunk of the XML that you want to parse.
 
-### `Saxophone#end(xml = "")`
+### `Saxy#end(xml = "")`
 
 Write an optional last chunk then close the stream. After the stream is closed, a final `finish` event is emitted and no other event will be emitted afterwards. No more data may be written into the stream after closing it.
 
 Arguments:
 
-* `xml` is an UTF-8 string or a `Buffer` containing a chunk of the XML that you want to parse.
+- `xml` is an UTF-8 string or a `Buffer` containing a chunk of the XML that you want to parse.
 
-### `Saxophone.parseAttrs(attrs)`
+### `Saxy.parseAttrs(attrs)`
 
 Parse a string list of XML attributes, as produced by the main parsing algorithm. This is not done automatically because it may not be required for every tag and it takes some time.
 
 The result is an object associating the attribute names (as object keys) to their attribute values (as object values).
 
-### `Saxophone.parseEntities(text)`
+### `Saxy.parseEntities(text)`
 
 Parses a piece of XML text and expands all XML entities inside it to the character they represent. Just like attributes, this is not parsed automatically because it takes some time.
 
@@ -185,9 +220,9 @@ This ignores invalid entities, including unrecognized ones, leaving them as-is.
 
 Emitted when an opening tag is parsed. This encompasses both regular tags and self-closing tags. An object is passed with the following data:
 
-* `name`: name of the parsed tag.
-* `attrs`: attributes of the tag (as a string). To parse this string, use `Saxophone.parseAttrs`.
-* `isSelfClosing`: true if the tag is self-closing.
+- `name`: name of the parsed tag.
+- `attrs`: attributes of the tag (as a string). To parse this string, use `Saxy.parseAttrs`.
+- `isSelfClosing`: true if the tag is self-closing.
 
 #### `tagclose`
 
@@ -199,7 +234,7 @@ Emitted when a processing instruction (such as `<? contents ?>`) is parsed. An o
 
 #### `text`
 
-Emitted when a text node between two tags is parsed. An object with the `contents` of the text node is passed. You might need to expand XML entities inside the contents of the text node, using `Saxophone.parseEntities`.
+Emitted when a text node between two tags is parsed. An object with the `contents` of the text node is passed. You might need to expand XML entities inside the contents of the text node, using `Saxy.parseEntities`.
 
 #### `cdata`
 
@@ -213,11 +248,11 @@ Emitted when a comment (such as `<!-- contents -->`) is parsed. An object with t
 
 Emitted when a parsing error is encountered while reading the XML stream such that the rest of the XML cannot be correctly interpreted:
 
-* when a DOCTYPE node is found (not supported yet);
-* when a comment node contains the `--` sequence;
-* when opening and closing tags are mismatched or missing;
-* when a tag name starts with white space;
-* when nodes are unclosed (missing their final `>`).
+- when a DOCTYPE node is found (not supported yet);
+- when a comment node contains the `--` sequence;
+- when opening and closing tags are mismatched or missing;
+- when a tag name starts with white space;
+- when nodes are unclosed (missing their final `>`).
 
 Because this library's goal is not to provide accurate error reports, the passed error will only contain a short description of the syntax error (without giving the position, for example).
 
@@ -229,11 +264,7 @@ Emitted after all events, without arguments.
 
 This is free and open source software. All contributions (even small ones) are welcome. [Check out the contribution guide to get started!](CONTRIBUTING.md)
 
-Thanks to:
-
-* [Norman Rzepka](https://github.com/normanrz) for implementing the streaming API and the check for opening and closing tags mismatch.
-* [winston01](https://github.com/winston01) for spotting and fixing an error in the parser when a tag sits astride two chunks.
-* [MattGson](https://github.com/MattGson) for spotting another similar error.
+Thanks to [Norman Rzepka](https://github.com/normanrz) for implementing the streaming API and the check for opening and closing tags mismatch.
 
 ## License
 
