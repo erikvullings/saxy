@@ -7,7 +7,7 @@ Fast and lightweight event-driven streaming XML parser in pure TypeScript.
 [![build status](https://img.shields.io/travis/erikvullings/saxy.svg?style=flat-square)](https://travis-ci.com/erikvullings/saxy)
 [![coverage](https://img.shields.io/coveralls/erikvullings/saxy.svg?style=flat-square)](https://coveralls.io/github/erikvullings/saxy)
 
-Saxy is forked from [Saxophone](https://github.com/matteodelabre/saxophone) version 0.7.2 and converted to TypeScript, so most credits go to Mattéo Delabre. Besides converting it to TypeScript, so you have proper typings when using it, it also includes several unmerged pull requests, i.e. testing on Node 16, and the parser is a `Transform` stream instead of a `Writeable` stream.
+Saxy is forked from [Saxophone](https://github.com/matteodelabre/saxophone) version 0.7.2 and converted to TypeScript, so most credits go to the original author, Mattéo Delabre. Besides converting it to TypeScript, so you have proper typings when using it, it also includes several unmerged pull requests [Marcellino Ornelas](https://github.com/marcellino-ornelas) and [Philip Otto](https://github.com/philippotto), i.e. the parser is a `Transform` stream instead of a `Writeable` stream, so you can pipe information through, and testing on Node 16.
 
 It is inspired by SAX parsers such as [sax-js](https://github.com/isaacs/sax-js) and [EasySax](https://github.com/vflash/easysax): unlike most XML parsers, it does not create a Document Object Model ([DOM](https://en.wikipedia.org/wiki/Document_Object_Model)) tree as a result of parsing documents. Instead, it emits events for each tag or text node encountered as the parsing goes on. This means that Saxy has a really low memory footprint and can easily parse large documents.
 
@@ -130,7 +130,7 @@ Open tag "example" with attributes: {"id":"2"}.
 Parsing finished.
 ```
 
-### Transform Stream (marcellino-ornelas)
+### Transform Stream
 
 Saxy can now be used as a transform stream to send the parsed XML to another stream. Saxy works to keep low memory so it doesn't save any of the XML internally but uses events to fire certain data. So how do you tell the parser to send data to the next stream? The way to send data to another stream is to use the `parser.push()` method.
 
@@ -165,7 +165,7 @@ createReadStream('file.xml')
 
 ### `new Saxy()`
 
-Creates a new Saxy parser instance. This object is a writable stream that will emit an event for each tag or node parsed from the incoming data. See [the list of events below.](#events)
+Creates a new Saxy parser instance. This object is a transform stream that will emit an event for each tag or node parsed from the incoming data. See [the list of events below.](#events)
 
 ### `Saxy#on()`, `Saxy#removeListener()`
 

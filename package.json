@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/matteodelabre/saxophone.git"
+    "url": "https://github.com/erikvullings/saxy.git"
   },
   "scripts": {
     "clean": "rimraf dist",
@@ -45,6 +45,13 @@
     "email": "spam@delab.re",
     "url": "https://github.com/matteodelabre"
   },
+  "contributors": [
+    {
+      "name": "Erik Vullings",
+      "email": "erik.vullings@tno.nl",
+      "url": "https://github.com/erikvullings"
+    }
+  ],
   "devDependencies": {
     "rimraf": "^3.0.2",
     "benchmark": "^2.1.4",

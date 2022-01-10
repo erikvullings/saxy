@@ -71,6 +71,7 @@ export type SaxyEventArgs =
 
 export interface Saxy {
   on<U extends SaxyEventNames>(event: U, listener: SaxyEvents[U]): this;
+  on(event: string | symbol | Event, listener: (...args: any[]) => void): this;
 
   once<U extends SaxyEventNames>(event: U, listener: SaxyEvents[U]): this;
 }
@@ -102,8 +103,8 @@ export class Saxy extends Transform {
    * to their values
    *
    * @param input A string of XML attributes
-   * @throws { Error } If the string is malformed
-   * @return { Record<string, unknown> } A map of attribute names to their values
+   * @throws If the string is malformed
+   * @return A map of attribute names to their values
    */
   static parseAttrs = parseAttrs;
 
@@ -112,8 +113,8 @@ export class Saxy extends Transform {
    * by their canonical value. Ignore invalid and unknown
    * entities
    *
-   * @param { string } input A string of XML text
-   * @return { string } The input string, expanded
+   * @param input A string of XML text
+   * @return The input string, expanded
    */
   static parseEntities = parseEntities;
 
@@ -137,9 +138,9 @@ export class Saxy extends Transform {
   /**
    * Handle a chunk of data written into the stream.
    *
-   * @param {Buffer|string} chunk Chunk of data.
-   * @param {string} encoding Encoding of the string, or 'buffer'.
-   * @param {function} callback Called when the chunk has been parsed, with
+   * @param chunk Chunk of data.
+   * @param encoding Encoding of the string, or 'buffer'.
+   * @param callback Called when the chunk has been parsed, with
    * an optional error argument.
    */
   public _write(chunk: Buffer | string, encoding: string, callback: NextFunction) {
@@ -151,7 +152,7 @@ export class Saxy extends Transform {
   /**
    * Handle the end of incoming data.
    *
-   * @param {function} callback
+   * @param callback
    */
   public _final(callback: NextFunction) {
     // Make sure all data has been extracted from the decoder
@@ -239,7 +240,7 @@ export class Saxy extends Transform {
    * Push the tag into the opened tag stack and emit the
    * corresponding event on the event emitter.
    *
-   * @param {TagOpen} node Information about the opened tag.
+   * @param node Information about the opened tag.
    */
   private _handleTagOpening(node: TagOpenNode) {
     if (!node.isSelfClosing) {
@@ -253,8 +254,8 @@ export class Saxy extends Transform {
    * Parse a XML chunk.
    *
    * @private
-   * @param {string} input A string with the chunk data.
-   * @param {function} callback Called when the chunk has been parsed, with
+   * @param input A string with the chunk data.
+   * @param callback Called when the chunk has been parsed, with
    * an optional error argument.
    */
   private _parseChunk(input: string, callback: NextFunction) {
@@ -327,8 +328,7 @@ export class Saxy extends Transform {
           chunkPos += 2;
           const commentClose = input.indexOf('--', chunkPos);
 
-          // Incomplete comment node, we need to wait for
-          // upcoming data
+          // Incomplete comment node, we need to wait for upcoming data
           if (commentClose === -1 || input[commentClose + 2] === undefined) {
             this._wait(Node.comment, input.slice(chunkPos - 4));
             break;
