@@ -5,7 +5,7 @@ Fast and lightweight event-driven streaming XML parser in pure TypeScript.
 [![npm version](https://img.shields.io/npm/v/saxy.svg?style=flat-square)](https://www.npmjs.com/package/saxy)
 [![npm downloads](https://img.shields.io/npm/dm/saxy.svg?style=flat-square)](https://www.npmjs.com/package/saxy)
 [![build status](https://img.shields.io/travis/erikvullings/saxy.svg?style=flat-square)](https://travis-ci.com/erikvullings/saxy)
-[![coverage](https://img.shields.io/coveralls/erikvullings/saxy.svg?style=flat-square)](https://coveralls.io/github/erikvullings/saxy)
+[![Coverage Status](https://coveralls.io/repos/github/erikvullings/saxy/badge.svg?branch=master)](https://coveralls.io/github/erikvullings/saxy?branch=master)
 
 Saxy is forked from [Saxophone](https://github.com/matteodelabre/saxophone) version 0.7.2 and converted to TypeScript, so most credits go to the original author, Mattéo Delabre. Besides converting it to TypeScript, so you have proper typings when using it, it also includes several unmerged pull requests [Marcellino Ornelas](https://github.com/marcellino-ornelas) and [Philip Otto](https://github.com/philippotto), i.e. the parser is a `Transform` stream instead of a `Writeable` stream, so you can pipe information through, and testing on Node 16.
 
@@ -24,6 +24,14 @@ To install, use either one of below commands:
 npm install --save saxy
 pnpm add saxy
 yarn add saxy
+```
+
+As the code can also be used in the browser, it includes the [readable-stream](https://www.npmjs.com/package/readable-stream) library, which is a mirror of the streams implementations in `Node.js`. Therefore, also install the `@types/readable-stream` types as a development dependency:
+
+```bash
+npm install --save-dev @types/readable-stream
+pnpm add -D @types/readable-stream
+yarn add -D @types/readable-stream
 ```
 
 ## Benchmark
